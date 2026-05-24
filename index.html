@@ -1105,6 +1105,129 @@
     }
 
     /* ─────────────────────────────────────────
+       MOBILE NAV OVERLAY
+    ───────────────────────────────────────── */
+    .mobile-nav {
+      position: fixed;
+      inset: 0;
+      background: var(--navy);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      padding: 28px 32px 48px;
+      transform: translateX(100%);
+      transition: transform .4s cubic-bezier(.77,0,.175,1);
+      overflow: hidden;
+    }
+
+    .mobile-nav.open { transform: translateX(0); }
+
+    .mobile-nav-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 56px;
+    }
+
+    .mobile-nav-logo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 28px;
+      color: var(--white);
+    }
+
+    .mobile-nav-close {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.2);
+      background: none;
+      color: var(--white);
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+
+    .mobile-nav-close:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.4); }
+
+    .mobile-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .mobile-nav-links li { overflow: hidden; }
+
+    .mobile-nav-links a {
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(36px, 8vw, 52px);
+      font-weight: 900;
+      color: rgba(255,255,255,.18);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      line-height: 1.15;
+      transition: color .25s;
+      letter-spacing: -.02em;
+    }
+
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.nav-active { color: var(--white); }
+
+    .mobile-nav-links a .mn-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      opacity: .45;
+      margin-top: 6px;
+    }
+
+    .mobile-nav-bottom {
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mobile-nav-contact {
+      font-size: 13px;
+      color: rgba(255,255,255,.5);
+      font-weight: 600;
+    }
+
+    .mobile-nav-contact a {
+      color: var(--white);
+      font-weight: 700;
+      display: block;
+      margin-top: 3px;
+    }
+
+    .mobile-nav-socials {
+      display: flex;
+      gap: 10px;
+    }
+
+    .mobile-nav-socials a {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.6);
+      transition: background .2s, color .2s;
+    }
+
+    .mobile-nav-socials a:hover { background: rgba(255,255,255,.1); color: #fff; }
+    .mobile-nav-socials svg { width: 15px; height: 15px; }
+
+    /* ─────────────────────────────────────────
        RESPONSIVE
     ───────────────────────────────────────── */
     @media (max-width: 1024px) {
@@ -1116,64 +1239,174 @@
       .hero { grid-template-columns: 1fr 1fr; height: auto; padding-top: 40px; padding-bottom: 48px; }
       .hero-right { display: none; }
       .hero-center { min-height: 420px; }
-
       .works-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-cols { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 768px) {
-      nav { padding: 18px 24px; }
+      /* Nav */
+      nav { padding: 16px 20px; }
       .nav-links, .nav-right { display: none; }
       .nav-burger { display: flex; }
 
+      /* Hero */
       .hero {
         grid-template-columns: 1fr;
-        padding: 40px 24px 48px;
+        padding: 32px 20px 52px;
         gap: 0;
+        min-height: 0;
       }
 
-      .hero-center { order: -1; min-height: 340px; margin-bottom: 32px; }
-      .hero-photo { width: 70%; }
+      .hero-left { order: 2; text-align: center; }
+      .hero-left > div:first-child { margin-bottom: 24px; }
+      .hero-center { order: 1; min-height: 300px; margin-bottom: 28px; }
+      .hero-right { display: none; }
 
+      .hero-pretitle { text-align: center; }
+      .hero-heading { font-size: clamp(38px, 9vw, 54px); text-align: center; }
+
+      .hero-email-wrap { justify-content: center; }
+      .hero-exp { justify-content: center; }
+
+      .hero-photo { width: 72%; max-width: 300px; }
+
+      /* Services */
       .services {
         grid-template-columns: 1fr;
-        padding: 64px 24px;
-        gap: 48px;
+        padding: 60px 20px;
+        gap: 44px;
       }
 
-      .experience { padding: 64px 24px; }
+      /* Experience */
+      .experience { padding: 60px 20px; }
 
-      .exp-item { grid-template-columns: 1fr 40px 1fr; }
+      .exp-item {
+        grid-template-columns: 28px 1fr;
+        grid-template-rows: auto auto;
+        gap: 0 16px;
+        padding: 24px 0;
+      }
 
-      .works { padding: 64px 24px; }
-      .works-grid { grid-template-columns: 1fr; }
+      .exp-connector {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        align-items: flex-start;
+        padding-top: 4px;
+      }
 
-      .testimonials { padding: 64px 24px; }
+      .exp-connector::after {
+        top: 20px;
+        bottom: -24px;
+        left: 50%;
+      }
+
+      .exp-meta {
+        grid-column: 2;
+        grid-row: 1;
+        padding-right: 0;
+        margin-bottom: 6px;
+      }
+
+      .exp-content {
+        grid-column: 2;
+        grid-row: 2;
+        padding-left: 0;
+      }
+
+      .exp-badge { margin-top: 8px; }
+
+      /* Works */
+      .works { padding: 60px 20px; }
+      .works-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+      /* Testimonials */
+      .testimonials { padding: 60px 20px; }
       .testi-grid { grid-template-columns: 1fr; }
 
+      /* Contact */
       .contact {
         grid-template-columns: 1fr;
-        padding: 64px 24px;
-        gap: 48px;
+        padding: 60px 20px;
+        gap: 44px;
       }
 
+      .contact-cols {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      /* Footer */
       footer {
-        padding: 20px 24px;
+        padding: 20px 20px;
         flex-direction: column;
         gap: 6px;
         text-align: center;
       }
+
+      .section-title { font-size: clamp(26px, 6vw, 36px); }
     }
 
     @media (max-width: 480px) {
-      .hero-heading { font-size: 42px; }
-      .exp-item { grid-template-columns: 140px 40px 1fr; }
-      .exp-company { font-size: 14px; }
-      .stats-row { gap: 32px; }
+      nav { padding: 14px 16px; }
+
+      .hero { padding: 24px 16px 44px; }
+      .hero-heading { font-size: 36px; }
+      .hero-photo { width: 78%; }
+
+      .works-grid { grid-template-columns: 1fr; gap: 12px; }
+      .work-card { aspect-ratio: 16/9; }
+
+      .exp-item { grid-template-columns: 24px 1fr; }
+      .exp-company { font-size: 15px; }
+      .exp-role { font-size: 15px; }
+
+      .contact-info-item { padding: 10px 12px; }
+      .contact-info-icon { width: 32px; height: 32px; border-radius: 8px; }
+
+      .services, .experience, .works, .testimonials, .contact {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      footer { padding: 18px 16px; }
     }
   </style>
 </head>
 
 <body>
+
+<!-- Mobile nav overlay -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-top">
+    <a href="#home" class="mobile-nav-logo" onclick="toggleMenu()">Uzair</a>
+    <button class="mobile-nav-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+  </div>
+
+  <ul class="mobile-nav-links">
+    <li><a href="#services" onclick="toggleMenu()"><span class="mn-num">01</span>Services</a></li>
+    <li><a href="#experience" onclick="toggleMenu()"><span class="mn-num">02</span>Experience</a></li>
+    <li><a href="#works" onclick="toggleMenu()"><span class="mn-num">03</span>Works</a></li>
+    <li><a href="#contact" onclick="toggleMenu()"><span class="mn-num">04</span>Contact</a></li>
+  </ul>
+
+  <div class="mobile-nav-bottom">
+    <div class="mobile-nav-contact">
+      <span>Say hello</span>
+      <a href="mailto:uzairkhalid802@gmail.com">uzairkhalid802@gmail.com</a>
+    </div>
+    <div class="mobile-nav-socials">
+      <a href="https://github.com/UzairKhalid-crypto" target="_blank" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/uzair-khalid-937727173" target="_blank" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <a href="https://www.instagram.com/devolper.scorpio" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
 
 <!-- Ambient background layers -->
 <div class="bg-ambient" aria-hidden="true">
@@ -1697,19 +1930,11 @@
 
   /* ── Mobile menu toggle ── */
   function toggleMenu() {
-    const links = document.querySelector('.nav-links');
-    const right = document.querySelector('.nav-right');
-    if (!links) return;
-    const open = links.style.display === 'flex';
-    links.style.display = open ? 'none' : 'flex';
-    links.style.flexDirection = 'column';
-    links.style.position = 'absolute';
-    links.style.top = '70px';
-    links.style.left = '0';
-    links.style.right = '0';
-    links.style.background = 'var(--cream)';
-    links.style.padding = '20px 24px';
-    links.style.borderBottom = '1px solid var(--border)';
+    const nav = document.getElementById('mobileNav');
+    if (!nav) return;
+    const isOpen = nav.classList.contains('open');
+    nav.classList.toggle('open');
+    document.body.style.overflow = isOpen ? '' : 'hidden';
   }
 
   /* ── Stagger hero on load ── */

@@ -1249,32 +1249,48 @@
       .nav-links, .nav-right { display: none; }
       .nav-burger { display: flex; }
 
-      /* Hero */
+      /* Hero — text top, photo fills bottom (like reference) */
       .hero {
-        grid-template-columns: 1fr;
-        padding: 32px 20px 52px;
+        display: flex;
+        flex-direction: column;
+        height: calc(100svh - 60px);
+        padding: 0;
         gap: 0;
-        min-height: 0;
+        min-height: 580px;
       }
 
-      .hero-left { order: 2; text-align: center; }
-      .hero-left > div:first-child { margin-bottom: 24px; }
-      .hero-center {
+      .hero-left {
         order: 1;
-        min-height: 360px;
-        height: 360px;
-        margin-bottom: 28px;
-        align-items: center;
+        flex-shrink: 0;
+        text-align: left;
+        padding: 28px 24px 16px;
+        gap: 14px;
+      }
+      .hero-left > div:first-child { margin-bottom: 0; }
+
+      .hero-center {
+        order: 2;
+        flex: 1;
+        min-height: 55vw;
+        overflow: hidden;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: 24px;
+        margin-bottom: 0;
+      }
+      .hero-center .brush-img {
+        width: 88%;
+        max-width: none;
       }
       .hero-right { display: none; }
 
-      .hero-pretitle { text-align: center; }
-      .hero-heading { font-size: clamp(38px, 9vw, 54px); text-align: center; }
+      .hero-pretitle { text-align: left; }
+      .hero-heading { font-size: clamp(40px, 11vw, 56px); text-align: left; line-height: 1.1; }
 
-      .hero-email-wrap { justify-content: center; }
-      .hero-exp { justify-content: center; }
+      .hero-email-wrap { justify-content: flex-start; }
+      .hero-exp { justify-content: flex-start; }
 
-      .hero-photo { width: 68%; max-width: 280px; }
+      .hero-photo { width: 82%; height: auto; max-width: none; object-fit: contain; }
 
       /* Services */
       .services {
@@ -1355,9 +1371,9 @@
     @media (max-width: 480px) {
       nav { padding: 14px 16px; }
 
-      .hero { padding: 24px 16px 44px; }
-      .hero-heading { font-size: 36px; }
-      .hero-photo { width: 78%; }
+      .hero-left { padding: 20px 20px 12px; }
+      .hero-heading { font-size: 38px; }
+      .hero-photo { width: 100%; height: auto; max-width: none; }
 
       .works-grid { grid-template-columns: 1fr; gap: 12px; }
       .work-card { aspect-ratio: 16/9; }
